@@ -1,10 +1,16 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 from rest_framework.decorators import api_view
+from rest_framework.pagination import PageNumberPagination
+from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
+from rest_framework.authentication import TokenAuthentication
 from details.models import Country,State,City,Town,Person
 from details.serializers import CountrySerializer,StateSerializer,CitySerializer,TownSerializer,PersonSerializer
-# Create your views here.
+import django_filters.rest_framework
+from rest_framework import generics
+
+from rest_framework.filters import OrderingFilter,SearchFilter
 ## CRUD For Country---------------------------------------------------
 @api_view(['GET', 'POST'])
 def country_create(request):
@@ -168,3 +174,13 @@ def person_delete(request, pk):
     return Response("Person Deleted")
 
 # END of CRUDs--------------------------------------------------------------
+
+#---------Pagination API for person----------------------------------------
+class PersonView(ListAPIView):
+    queryset=Person.objects.all()
+    serializer_class = PersonSerializer
+    pagination_class = PageNumberPagination
+    filter_backends = (OrderingFilter,SearchFilter,)
+    # searching and ordring data with respect to country,state,city,town--------
+    search_fields = ['Name','City__Name','Town__Name','City__State__Name','City__State__Country__Name',]
+    

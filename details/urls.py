@@ -1,4 +1,5 @@
 from . import views
+from details.views import PersonView
 from django.urls import path
 app_name='details'
 urlpatterns=[
@@ -22,6 +23,7 @@ urlpatterns=[
     path('person_delete/<str:pk>/', views.person_delete, name='person_delete'),
     path('person_update/<str:pk>/', views.person_update, name='person_update'),
     path('person_retrieve/<str:pk>/', views.person_retrieve ,name='person_retrieve'),
+    path('person_page/', PersonView.as_view(),name='PersonView'),
 
 
 ]

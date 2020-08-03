@@ -7,6 +7,7 @@ class Country(models.Model):
     Description=models.TextField(max_length=248)
     Population=models.IntegerField()
     GDP=models.FloatField()
+    # creatin dictionary of cities in states  using @property-------------
     @property
     def states(self):
         return self.state_set.all()
@@ -18,6 +19,7 @@ class State(models.Model):
     Description=models.TextField(max_length=248)
     Population=models.IntegerField()
     GDP=models.FloatField()
+    # creatin dictionary of cities in states  using @property------------------
     @property
     def cities(self):
         return self.city_set.all()
@@ -42,3 +44,5 @@ class Town(models.Model):
 class Person(models.Model):
     id = models.AutoField(primary_key=True)
     Name=models.CharField(max_length=26)
+    City=models.ForeignKey(City, on_delete=models.CASCADE,blank=True)
+    Town=models.ForeignKey(Town, on_delete=models.CASCADE,blank=True)
