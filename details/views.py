@@ -9,9 +9,10 @@ from details.models import Country,State,City,Town,Person
 from details.serializers import CountrySerializer,StateSerializer,CitySerializer,TownSerializer,PersonSerializer
 import django_filters.rest_framework
 from rest_framework import generics
-
 from rest_framework.filters import OrderingFilter,SearchFilter
+
 ## CRUD For Country---------------------------------------------------
+
 @api_view(['GET', 'POST'])
 def country_create(request):
     if request.method == 'GET':
